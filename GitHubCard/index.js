@@ -2,6 +2,25 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios
+  .get("https://api.github.com/users/CDuenas")
+  .then((res) => {
+    const gitInfo = (res.data);
+  //   // Object.values(gitInfo).forEach(value=>{
+  //     // const newInfo = (value);
+  //     // console.log(gitInfo);
+  // })
+    // const gitEntries = Object.values(gitInfo)
+    // console.log(gitEntries);
+    // gitEntries.forEach((info) => {
+    //   const newInfo = createCard(info);
+    //   cards.appendChild(newInfo);
+    // })
+    console.log(gitInfo);
+  })
+  .catch((err) => {
+    console.log("You hit an error", err);
+  })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -53,3 +72,38 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+const cards = document.querySelector('.cards');
+
+function createCard(obj){
+  const card = document.createElement('div');
+  const cardImg = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const cardName = document.createElement('h3');
+  const cardUserName = document.createElement('p');
+  const cardLocation = document.createElement('p');
+  const cardProfile = document.createElement('p');
+  const profileAddress = document.createElement('a');
+  const cardFollowers = document.createElement('p');
+  const cardFollowing = document.createElement('p');
+  const cardBio = document.createElement('p');
+
+  card.appendChild(cardImg);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(cardName);
+  cardInfo.appendChild(cardUserName);
+  cardInfo.appendChild(cardLocation);
+  cardInfo.appendChild(cardProfile);
+  cardProfile.appendChild(profileAddress);
+  cardInfo.appendChild(cardFollowers);
+  cardInfo.appendChild(cardFollowing);
+  cardInfo.appendChild(cardBio);
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name');
+  cardUserName.classList.add('username');
+
+  return card;
+  
+}
