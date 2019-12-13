@@ -6,17 +6,9 @@ axios
   .get("https://api.github.com/users/CDuenas")
   .then((res) => {
     const gitInfo = (res.data);
-  //   // Object.values(gitInfo).forEach(value=>{
-  //     // const newInfo = (value);
-  //     // console.log(gitInfo);
-  // })
-    // const gitEntries = Object.values(gitInfo)
-    // console.log(gitEntries);
-    // gitEntries.forEach((info) => {
-    //   const newInfo = createCard(info);
-    //   cards.appendChild(newInfo);
-    // })
     console.log(gitInfo);
+    cards.appendChild(createCard(gitInfo));
+    
   })
   .catch((err) => {
     console.log("You hit an error", err);
@@ -43,7 +35,20 @@ axios
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['desiquinn', 'CJStryker', 'tlewandowski18', 'MLucky518', 'HeyMichelle'];
+followersArray.forEach((name) => {
+  axios
+  .get("https://api.github.com/users/" + name)
+  .then((res) => {
+    const gitInfo = (res.data);
+    console.log(gitInfo);
+    cards.appendChild(createCard(gitInfo));
+    
+  })
+  .catch((err) => {
+    console.log("You hit an error", err);
+  })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -103,6 +108,15 @@ function createCard(obj){
   cardInfo.classList.add('card-info');
   cardName.classList.add('name');
   cardUserName.classList.add('username');
+
+  cardImg.src = obj.avatar_url;
+  cardName.textContent = "Name: " + obj.name; 
+  cardUserName.textContent = "Username " + obj.login;
+  cardLocation.textContent = "Location: " + obj.location;
+  profileAddress.textContent = obj.html_url;
+  cardFollowers.textContent = obj.followers;
+  cardFollowing.textContent = obj.following;
+  cardBio.textContent = obj.bio;
 
   return card;
   
