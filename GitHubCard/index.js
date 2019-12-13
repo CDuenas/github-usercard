@@ -2,6 +2,17 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios
+  .get("https://api.github.com/users/CDuenas")
+  .then((res) => {
+    const gitInfo = (res.data);
+    console.log(gitInfo);
+    cards.appendChild(createCard(gitInfo));
+    
+  })
+  .catch((err) => {
+    console.log("You hit an error", err);
+  })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -24,7 +35,20 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['desiquinn', 'CJStryker', 'tlewandowski18', 'MLucky518', 'HeyMichelle'];
+followersArray.forEach((name) => {
+  axios
+  .get("https://api.github.com/users/" + name)
+  .then((res) => {
+    const gitInfo = (res.data);
+    console.log(gitInfo);
+    cards.appendChild(createCard(gitInfo));
+    
+  })
+  .catch((err) => {
+    console.log("You hit an error", err);
+  })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -53,3 +77,47 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+const cards = document.querySelector('.cards');
+
+function createCard(obj){
+  const card = document.createElement('div');
+  const cardImg = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const cardName = document.createElement('h3');
+  const cardUserName = document.createElement('p');
+  const cardLocation = document.createElement('p');
+  const cardProfile = document.createElement('p');
+  const profileAddress = document.createElement('a');
+  const cardFollowers = document.createElement('p');
+  const cardFollowing = document.createElement('p');
+  const cardBio = document.createElement('p');
+
+  card.appendChild(cardImg);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(cardName);
+  cardInfo.appendChild(cardUserName);
+  cardInfo.appendChild(cardLocation);
+  cardInfo.appendChild(cardProfile);
+  cardProfile.appendChild(profileAddress);
+  cardInfo.appendChild(cardFollowers);
+  cardInfo.appendChild(cardFollowing);
+  cardInfo.appendChild(cardBio);
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name');
+  cardUserName.classList.add('username');
+
+  cardImg.src = obj.avatar_url;
+  cardName.textContent = "Name: " + obj.name; 
+  cardUserName.textContent = "Username " + obj.login;
+  cardLocation.textContent = "Location: " + obj.location;
+  profileAddress.textContent = obj.html_url;
+  cardFollowers.textContent = obj.followers;
+  cardFollowing.textContent = obj.following;
+  cardBio.textContent = obj.bio;
+
+  return card;
+  
+}
